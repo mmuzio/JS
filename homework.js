@@ -329,7 +329,7 @@ The following line should set a Person object to the variable john:
 function getPerson(name, age) {
 
     return {name: name, age: age};
-
+    
 }
 
  
