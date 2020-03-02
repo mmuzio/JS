@@ -347,3 +347,4 @@ NOTE: Part II will be done twice: once with Javascript and once with jQuery.
 	  They should be done separately.
 	  Copy the index.html file and rename them to: indexJavascript.html and indexJQuery.html
 -----------------------------------------------------------------------------------
+*/

@@ -2,6 +2,7 @@
 <html>
 <head>
   <script src="homework.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="ISO-8859-1">
 <title>DOM</title>
 </head>
@@ -106,25 +107,15 @@ Find the html element that contains "USA".
 Print that element's contents.
 */
 function getUSA() {
-
-    var allElements = document.body.getElementsByTagName("*");
-
-    var searchText = 'USA';
-
-    var foundSearch;
-
-    for (var i = 0; i < allElements.length; i++) {
-
-        if (allElements[i].textContent == searchText) {
-
-          foundSearch = allElements[i].innerHTML;
-
-          console.log(foundSearch);
-
-        }
-
+  let searchText = "USA";
+  $(document).ready(function(){
+    let list = $("span");
+    for (let i = 0; i < list.length ; i++) {
+      if (list[i].textContent == searchText) {
+        console.log(list[i].innerHTML);
       }
-    return;
+    }
+  });
 }
 
 /*  
@@ -134,30 +125,32 @@ Print the names of all the people in the sales department.
 */
 function getPeopleInSales() {
 
-    var allElements = document.body.getElementsByTagName("*");
+  let searchText = "Sales";
 
-    var searchText = 'Sales';
+  $(document).ready(function(){
 
-    var foundSearch;
+    let list = $("*");
 
-    var parent;
+    for (let i = 0; i < list.length ; i++) {
 
-    var name;
+      if (list[i].textContent == searchText) {
 
-    for (var i = 0; i < allElements.length; i++) {
-        if (allElements[i].textContent == searchText) {
+        foundSearch = list[i];
 
-          found = allElements[i];
+        parent = foundSearch.parentElement;
 
-          parent = foundSearch.parentElement;
+        name = parent.getElementsByClassName("empName")[0].innerHTML;
 
-          name = parent.getElementsByClassName("empName")[0].innerHTML;
+        console.log(name);
 
-          console.log(name);
-
-        }
       }
-    return;
+
+    }
+
+  });
+
+  return;
+
 }
 
 
@@ -168,31 +161,33 @@ Define function getAnchorChildren()
 Find all anchor elements with a <span> child.
 Print the contents of <span>
   */
- function getAnchorChildren() {
+function getAnchorChildren() {
 
-    var allAnchorElements = document.body.getElementsByTagName("a");
+  $(document).ready(function(){
 
-    var foundSpan;
+    let allAnchorElements = $("a");
 
-    for (var i = 0; i < allAnchorElements.length; i++) {
+    for (let i = 0; i < allAnchorElements.length ; i++) {
 
-        var allChildNodes = allAnchorElements[i].childNodes;
+      var allChildNodes = allAnchorElements[i].childNodes;
 
-        for (var j = 0; j < allChildNodes.length; j++) {
+      for (let j = 0; j < allChildNodes.length; j++) {
 
-            if (allChildNodes[j].nodeName == "SPAN") {
+          if (allChildNodes[j].nodeName == "SPAN") {
 
-                foundSpan = allChildNodes[j].innerHTML;
+              foundSpan = allChildNodes[j].innerHTML;
 
-                console.log(foundSpan);
+              console.log(foundSpan);
 
-            } 
-
-        }
+          } 
 
       }
 
-    return;
+    }
+
+  });
+
+  return;
 
  }
 
@@ -205,11 +200,15 @@ Print the value and the contents.
 */
 function getHobbies() {
 
-    var hobbies = document.getElementsByName("hobbies")[0];
+  $(document).ready(function(){
 
-    var selectedValue = hobbies.options[hobbies.selectedIndex].value;
+    var hobby = $('[name="hobbies"] option').filter(':selected').text();
 
-    console.log(selectedValue);
+    console.log(hobby);
+
+  });
+
+  return;
 
 }
 
@@ -222,21 +221,16 @@ Print the element that has the attribute.
 */
 function getCustomAttribute() {
 
-    var allElements = document.body.getElementsByTagName("*");
+  $(document).ready(function(){
 
-    for (var i = 0; i < allElements.length; i++) {
+    let custom = $("[data-customAttr]").attr("data-customAttr");
 
-        if (allElements[i].hasAttribute('data-customAttr')) {
+    console.log(custom);
 
-          console.log(allElements[i].getAttribute("data-customAttr"));
+  });
 
-          console.log(allElements[i]);
-
-        }
-
-      }
-
-    return;
+  return;
+  
 }
 
 
@@ -258,22 +252,6 @@ If values cannot be added, put "Cannot add" in the <span> element
 
 function sumEvent() {
 
-    console.log("num1 is " + document.getElementById("num1").value);
-
-    console.log("num2 is " + document.getElementById("num2").value);
-
-    var sum = parseInt(document.getElementById("num1").value) + parseInt(document.getElementById("num2").value);
-
-    if (isNaN(sum)) {
-
-        document.getElementById("sum").innerHTML = "Cannot add";
-
-    } else {
-
-        document.getElementById("sum").innerHTML = parseInt(document.getElementById("num1").value) + parseInt(document.getElementById("num2").value);        
-
-    }
-
     return;
 
 }
@@ -287,14 +265,6 @@ When user selects a skill, create an alert with a message similar to:
 NOTE: no alert should appear when user deselects a skill.
 */
 function skillEvent() {
-
-    var skills = document.getElementsByName("skills")[0];
-
-    var selectedValue = skills.options[skills.selectedIndex].value;
-
-    alert("Try again, " + selectedValue + " is not one of your skills");
-
-    console.log(selectedValue);
 
     return;
 }
@@ -311,39 +281,6 @@ Make the background color (of all favoriteColor radio buttons) the newly selecte
 */
 function colorEvent() {
 
-    var radios = document.forms["firstForm"].elements["favoriteColor"];
-    
-    var previousVal;
-
-    for(var i = 0, max = radios.length; i < max; i++) {
-
-        if (radios[i].checked) {
-
-            previousVal = radios[i].value;
-
-            break;
-
-        }
-    }
-
-    var clickedColor;
-
-
-    for(var i = 0, max = radios.length; i < max; i++) {
-
-        radios[i].onclick = function() {
-
-            alert("So you like " + this.value + " more than " + previousVal + " now?");
-
-            clickedColor = this.value;
-
-            //this.previousValue = this.value;
-        
-        }
-    }
-
-        radios[0].parentElement.style.color = clickedColor;
-
 
     return;
 }
@@ -357,40 +294,6 @@ When user hovers over an employees name:
 */
 function showHide() {
 
-    var tables = document.getElementsByTagName("table")[0];
-
-    var names = tables.getElementsByClassName("empName");
-
-    for (var i =  0; i < names.length; i++) {
-
-        if (event.target == names[i]) {
-
-
-            if (event.target.style.color == "white") {
-
-                event.target.style.color = "black";
-
-            } else {
-
-                event.target.style.color = "white";
-
-            }
-
-            /*
-           if (event.target.style.visibility === "hidden") {
-
-              event.target.style.visibility = "visible";
-
-            } else {
-
-              event.target.style.visibility = "hidden";
-
-            }
-            */
-
-        }
-
-    }
     return;
 }    
 
@@ -420,6 +323,7 @@ function currentTimeOnh5() {
 
     seconds = formatMinutesAndSeconds(seconds);
 
+    //replace
     document.getElementById('currentTime').innerHTML = 
     hours + ":" + minutes + ":" + seconds + " " + ampm;
 
@@ -460,6 +364,7 @@ Three seconds after a user clicks on this element, change the text to a random c
 */
 function delayOnP() {
 
+    //replace
     helloWorld = document.getElementById("helloWorld");
 
     helloWorld.onclick = setTimeout(function () {

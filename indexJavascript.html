@@ -148,7 +148,7 @@ function getPeopleInSales() {
     for (var i = 0; i < allElements.length; i++) {
         if (allElements[i].textContent == searchText) {
 
-          found = allElements[i];
+          foundSearch = allElements[i];
 
           parent = foundSearch.parentElement;
 
@@ -343,9 +343,6 @@ function colorEvent() {
         }
     }
 
-        radios[0].parentElement.style.color = clickedColor;
-
-
     return;
 }
 
@@ -530,6 +527,22 @@ window.onload = function() {
     var tables = document.getElementsByTagName("table")[0];
     
     tables.addEventListener("mouseover", showHide);
+
+    var radios = document.forms["firstForm"].elements["favoriteColor"];
+
+    var parent = radios[0].parentNode;
+
+    var wrapper = document.createElement('div');
+
+    for(var i = 0, max = radios.length; i < max; i++) {
+
+      wrapper.appendChild(radios[i]);
+
+      parent.removeChild(radios[i]);
+
+    }
+
+    parent.appendChild(wrapper);
 
 }
 
