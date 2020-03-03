@@ -347,4 +347,486 @@ NOTE: Part II will be done twice: once with Javascript and once with jQuery.
 	  They should be done separately.
 	  Copy the index.html file and rename them to: indexJavascript.html and indexJQuery.html
 -----------------------------------------------------------------------------------
+  /*
+1. USA
+Define function getUSA()
+Find the html element that contains "USA".
+Print that element's contents.
 */
+function getUSA() {
+
+    var allElements = document.body.getElementsByTagName("*");
+
+    var searchText = 'USA';
+
+    var foundSearch;
+
+    for (var i = 0; i < allElements.length; i++) {
+
+        if (allElements[i].textContent == searchText) {
+
+          foundSearch = allElements[i].innerHTML;
+
+          console.log(foundSearch);
+
+        }
+
+      }
+    return;
+}
+
+/*  
+2. Sales
+Define function getPeopleInSales()
+Print the names of all the people in the sales department.
+*/
+function getPeopleInSales() {
+
+    var allElements = document.body.getElementsByTagName("*");
+
+    var searchText = 'Sales';
+
+    var foundSearch;
+
+    var parent;
+
+    var name;
+
+    for (var i = 0; i < allElements.length; i++) {
+        if (allElements[i].textContent == searchText) {
+
+          foundSearch = allElements[i];
+
+          parent = foundSearch.parentElement;
+
+          name = parent.getElementsByClassName("empName")[0].innerHTML;
+
+          console.log(name);
+
+        }
+      }
+    return;
+}
+
+
+
+/*
+3. Click Here
+Define function getAnchorChildren()
+Find all anchor elements with a <span> child.
+Print the contents of <span>
+  */
+ function getAnchorChildren() {
+
+    var allAnchorElements = document.body.getElementsByTagName("a");
+
+    var foundSpan;
+
+    for (var i = 0; i < allAnchorElements.length; i++) {
+
+        var allChildNodes = allAnchorElements[i].childNodes;
+
+        for (var j = 0; j < allChildNodes.length; j++) {
+
+            if (allChildNodes[j].nodeName == "SPAN") {
+
+                foundSpan = allChildNodes[j].innerHTML;
+
+                console.log(foundSpan);
+
+            } 
+
+        }
+
+      }
+
+    return;
+
+ }
+
+
+  /*
+4. Hobbies
+Define function getHobbies()
+Find the checked option in the 'hobbies' select element.
+Print the value and the contents.
+*/
+function getHobbies() {
+
+    var hobbies = document.getElementsByName("hobbies")[0];
+
+    var selectedValue = hobbies.options[hobbies.selectedIndex].value;
+
+    console.log(selectedValue);
+
+}
+
+/*  
+5. Custom Attribute
+Define function getCustomAttribute()
+Find all elements with "data-customAttr" attribute
+Print the value of the attribute.
+Print the element that has the attribute.
+*/
+function getCustomAttribute() {
+
+    var allElements = document.body.getElementsByTagName("*");
+
+    for (var i = 0; i < allElements.length; i++) {
+
+        if (allElements[i].hasAttribute('data-customAttr')) {
+
+          console.log(allElements[i].getAttribute("data-customAttr"));
+
+          console.log(allElements[i]);
+
+        }
+
+      }
+
+    return;
+}
+
+
+
+/*
+6. Sum Event
+NOTE: Write unobtrusive Javascript
+Regarding these elements:
+	<input id="num1" class="nums" type="text"/>
+	<input id="num2" class="nums" type="text"/>
+	<h3>Sum: <span id="sum"></span></h3>
+
+Define onchange event handler.
+Add <input> element values.
+Put the sum in the <span> element.
+If values cannot be added, put "Cannot add" in the <span> element
+*/
+
+
+function sumEvent() {
+
+    console.log("num1 is " + document.getElementById("num1").value);
+
+    console.log("num2 is " + document.getElementById("num2").value);
+
+    var sum = parseInt(document.getElementById("num1").value) + parseInt(document.getElementById("num2").value);
+
+    if (isNaN(sum)) {
+
+        document.getElementById("sum").innerHTML = "Cannot add";
+
+    } else {
+
+        document.getElementById("sum").innerHTML = parseInt(document.getElementById("num1").value) + parseInt(document.getElementById("num2").value);        
+
+    }
+
+    return;
+
+}
+
+
+/*
+7. Skills Event
+NOTE: Write unobtrusive Javascript
+When user selects a skill, create an alert with a message similar to:
+	"Are you sure CSS is one of your skills?"
+NOTE: no alert should appear when user deselects a skill.
+*/
+function skillEvent() {
+
+    var skills = document.getElementsByName("skills")[0];
+
+    var selectedValue = skills.options[skills.selectedIndex].value;
+
+    alert("Try again, " + selectedValue + " is not one of your skills");
+
+    console.log(selectedValue);
+
+    return;
+}
+
+
+/*
+8. Favorite Color Event
+NOTE: Write unobtrusive Javascript
+NOTE: This is regarding the favoriteColor radio buttons.
+When a user selects a color, create an alert with a message similar to:
+	"So you like green more than blue now?"
+In this example, green is the new value and blue is the old value.
+Make the background color (of all favoriteColor radio buttons) the newly selected favoriteColor
+*/
+function colorEvent() {
+
+    var radios = document.forms["firstForm"].elements["favoriteColor"];
+    
+    var previousVal;
+
+    // find what is currently checked, set its value to previousval
+    for(var i = 0, max = radios.length; i < max; i++) {
+
+        if (radios[i].checked) {
+
+            previousVal = radios[i].value;
+
+            break;
+
+        }
+    }
+
+
+    var clickedColor;
+
+
+    // set onclick listener to return newly selected color
+    // and output a message comparing newly selected to 
+    // previous selected
+    for(var i = 0, max = radios.length; i < max; i++) {
+
+        radios[i].onclick = function() {
+
+            alert("So you like " + this.value + " more than " + previousVal + " now?");
+
+            clickedColor = this.value;
+        
+        }
+    }
+
+    radios[0].parentElement.style.color = clickedColor;
+
+    return;
+}
+
+/*
+9. Show/Hide Event
+NOTE: Write unobtrusive Javascript
+When user hovers over an employees name:
+	Hide the name if shown.
+    Show the name if hidden.
+*/
+function showHide() {
+
+    var tables = document.getElementsByTagName("table")[0];
+
+    var names = tables.getElementsByClassName("empName");
+
+    for (var i =  0; i < names.length; i++) {
+
+        if (event.target == names[i]) {
+
+
+            if (event.target.style.color == "white") {
+
+                event.target.style.color = "black";
+
+            } else {
+
+                event.target.style.color = "white";
+
+            }
+
+            // Couldn't get this to work, trying to set visibility 
+            // property gave errors, so I elected to just change color
+            // to hide the element. This will not work well if the page
+            // bbackground color changes, for instance
+            /*
+           if (event.target.style.visibility === "hidden") {
+
+              event.target.style.visibility = "visible";
+
+            } else {
+
+              event.target.style.visibility = "hidden";
+
+            }
+            */
+
+        }
+
+    }
+    return;
+}    
+
+
+/*
+10. Current Time
+Regarding this element:
+	<h5 id="currentTime"></h5>
+Show the current time in this element in this format: 9:05:23 AM
+The time should be accurate to the second without having to reload the page.
+*/
+function currentTimeOnh5() {
+
+    var date = new Date();
+
+    var hours = date.getHours();
+
+    var minutes = date.getMinutes();
+
+    var seconds = date.getSeconds();
+
+    var ampm = AMorPM(hours);
+
+    hours = formatHours(hours);
+
+    minutes = formatMinutesAndSeconds(minutes);
+
+    seconds = formatMinutesAndSeconds(seconds);
+
+    document.getElementById('currentTime').innerHTML = 
+    hours + ":" + minutes + ":" + seconds + " " + ampm;
+
+    var t = setTimeout(currentTimeOnh5, 500);
+
+  }
+
+  function formatMinutesAndSeconds(time) {
+
+    if (time < 10) {time = "0" + time};
+
+    return time;
+
+  }
+  
+  function formatHours(hours) {
+
+    if (hours > 12) {hours = hours - 12};  
+
+    return hours;
+
+  }
+
+  function AMorPM(hours) {
+
+    if (hours > 12) {return "PM"};
+
+    return "AM"
+
+  }
+
+
+/*
+11. Delay
+Regarding this element:
+	<p id="helloWorld">Hello, World!</p>
+Three seconds after a user clicks on this element, change the text to a random color.
+*/
+function delayOnP() {
+
+    helloWorld = document.getElementById("helloWorld");
+
+    helloWorld.onclick = setTimeout(function () {
+         
+        let colors = ["blue", "red", "green", "orange", "black"];
+
+        let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+        helloWorld.style.color = randomColor;
+      
+      }, 3000);
+
+    return;
+}
+
+/*
+12. Walk the DOM
+Define function walkTheDOM(node, func)
+This function should traverse every node in the DOM. Use recursion.
+On each node, call func(node).
+*/
+function walkTheDOM(node, func) {
+
+    console.log(node.tagName);
+
+    func(node);
+
+    // find the first child
+    node = node.firstChild;
+
+    while (node) {
+
+        //walk the dom for the first child
+        walkTheDOM(node, func);
+
+        //walk the dom for every other child
+        node = node.nextSibling;
+
+    }
+
+    return;
+}
+
+window.onload = function() {
+
+    var helloW = this.document.getElementById("helloWorld");
+
+    helloW.addEventListener("click", this.delayOnP);
+
+    currentTimeOnh5();
+
+    delayOnP();
+
+    var num1 = document.getElementById("num1");
+
+    var num2 = document.getElementById("num2");
+
+    num1.addEventListener("change", sumEvent);
+
+    num2.addEventListener("change", sumEvent);
+
+    var skills = document.getElementsByName("skills")[0];
+
+    skills.addEventListener("change", skillEvent);
+
+    var form = document.getElementById("firstForm");
+
+    form.addEventListener("change", colorEvent);
+
+    var tables = document.getElementsByTagName("table")[0];
+    
+    tables.addEventListener("mouseover", showHide);
+
+    var newElem = document.createElement('div')
+
+    // make a wrapper div for favoriteColor radio buttons
+    // so that I can set the background color 
+    // COULDN'T GET THIS TO WORK!!!
+    // var parent = radios[0].parentNode;
+    /*
+
+    Array.prototype.forEach.call(document.getElementsByName("favoriteColor"), function(c){
+        newElem.appendChild(c);
+    });
+    form.appendChild(newElem);
+    
+    var wrapper = document.createElement('div');
+
+    var children = document.getElementsByName("favoriteColor"); 
+
+    let i = 0;
+
+    let child = children[i];
+    
+    while (child) { 
+
+        let parent = child.parentNode;
+
+        this.console.log("parent is " + parent + "child is " + child + "actual parent is " + child.parentElement);
+
+        wrapper.appendChild(child); 
+
+        parent.removeChild(child); 
+
+        i += 1;
+
+        child = children[i];
+
+        } 
+        */
+
+    // add div to form so that radio buttons are still 
+    // contained within the form, but now within a div
+    //form.appendChild(wrapper);
+
+}

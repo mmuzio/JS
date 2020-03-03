@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="homework.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="ISO-8859-1">
 <title>DOM</title>
@@ -230,7 +229,7 @@ function getCustomAttribute() {
   });
 
   return;
-  
+
 }
 
 
@@ -252,6 +251,22 @@ If values cannot be added, put "Cannot add" in the <span> element
 
 function sumEvent() {
 
+    let num1 = $("#num1").val();
+
+    var num2 = $("#num2").val();
+
+    var sum = parseInt(num1) + parseInt(num2);
+
+    if (isNaN(sum)) {
+
+      $("#sum").html("Cannot add");
+
+    } else {
+
+      $("#sum").html(sum);        
+
+    }
+
     return;
 
 }
@@ -266,7 +281,15 @@ NOTE: no alert should appear when user deselects a skill.
 */
 function skillEvent() {
 
-    return;
+  $(document).ready(function(){
+
+    var skills = $('[name="skills"] option').filter(':selected').text();
+
+    alert("Are you you sure " + skills + " is one of your skills?");
+
+    });
+
+  return;
 }
 
 
@@ -279,8 +302,19 @@ When a user selects a color, create an alert with a message similar to:
 In this example, green is the new value and blue is the old value.
 Make the background color (of all favoriteColor radio buttons) the newly selected favoriteColor
 */
+var colorHistory = new Array();
+
+colorHistory[0] = "blue";
+
 function colorEvent() {
 
+    var faveColor = $("#firstForm input[name=favoriteColor]:checked").val();//.html();//.filter(':selected').text();
+
+    colorHistory[1] = faveColor;
+
+    alert("So you like " + colorHistory[1] + " more than " + colorHistory[0] + " now?");
+
+    colorHistory[0] = faveColor;
 
     return;
 }
@@ -293,8 +327,19 @@ When user hovers over an employees name:
     Show the name if hidden.
 */
 function showHide() {
+    
+    if($(this).css("color") == "rgb(0, 0, 0)"){
 
-    return;
+      $(this).css("color", "white");
+
+    } else {
+      
+      $(this).css("color", "black");
+      
+    }
+
+  return;
+
 }    
 
 
@@ -323,9 +368,7 @@ function currentTimeOnh5() {
 
     seconds = formatMinutesAndSeconds(seconds);
 
-    //replace
-    document.getElementById('currentTime').innerHTML = 
-    hours + ":" + minutes + ":" + seconds + " " + ampm;
+    $('#currentTime').html(hours + ":" + minutes + ":" + seconds + " " + ampm);
 
     var t = setTimeout(currentTimeOnh5, 500);
 
@@ -404,7 +447,7 @@ function walkTheDOM(node, func) {
 
     return;
 }
-
+var hiddenv = false;
 window.onload = function() {
 
     var helloW = this.document.getElementById("helloWorld");
@@ -415,29 +458,38 @@ window.onload = function() {
 
     delayOnP();
 
-    var num1 = document.getElementById("num1");
+    //showHide();
 
-    var num2 = document.getElementById("num2");
+    var num1 = $("#num1");
 
-    num1.addEventListener("change", sumEvent);
+    var num2 = $("#num2");
 
-    num2.addEventListener("change", sumEvent);
+    var skills = $("select[name=skills]");
 
-    var skills = document.getElementsByName("skills")[0];
+    var forms = $("#firstForm input[name=favoriteColor]");
 
-    skills.addEventListener("change", skillEvent);
+    var employees = $('.empName');
 
-    var form = document.getElementById("firstForm");
-
-    form.addEventListener("change", colorEvent);
-
-    var tables = document.getElementsByTagName("table")[0];
     
-    tables.addEventListener("mouseover", showHide);
+    
+
+    $(document).ready(function() { 
+
+      num1.change(sumEvent);
+
+      num2.change( sumEvent);
+
+      skills.change(skillEvent);
+
+      forms.change(colorEvent);
+
+    });
+
+    employees.on("mouseenter", showHide);
 
 }
 
-  </script>
+</script>
   
 </body>
 </html>
