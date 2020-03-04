@@ -476,9 +476,9 @@ function getCustomAttribute() {
 
         if (allElements[i].hasAttribute('data-customAttr')) {
 
-          console.log(allElements[i].getAttribute("data-customAttr"));
+          console.log("The value is: " + allElements[i].getAttribute("data-customAttr"));
 
-          console.log(allElements[i]);
+          console.log("The element is: " + allElements[i].nodeName);
 
         }
 
@@ -506,11 +506,11 @@ If values cannot be added, put "Cannot add" in the <span> element
 
 function sumEvent() {
 
-    console.log("num1 is " + document.getElementById("num1").value);
+    let num1 = document.getElementById("num1").value;
 
-    console.log("num2 is " + document.getElementById("num2").value);
+    let num2 = document.getElementById("num2").value
 
-    var sum = parseInt(document.getElementById("num1").value) + parseInt(document.getElementById("num2").value);
+    let sum = parseInt(num1) + parseInt(num2);
 
     if (isNaN(sum)) {
 
@@ -518,7 +518,7 @@ function sumEvent() {
 
     } else {
 
-        document.getElementById("sum").innerHTML = parseInt(document.getElementById("num1").value) + parseInt(document.getElementById("num2").value);        
+        document.getElementById("sum").innerHTML = sum;        
 
     }
 
@@ -541,8 +541,6 @@ function skillEvent() {
     var selectedValue = skills.options[skills.selectedIndex].value;
 
     alert("Try again, " + selectedValue + " is not one of your skills");
-
-    console.log(selectedValue);
 
     return;
 }
@@ -575,10 +573,6 @@ function colorEvent() {
         }
     }
 
-
-    var clickedColor;
-
-
     // set onclick listener to return newly selected color
     // and output a message comparing newly selected to 
     // previous selected
@@ -587,13 +581,9 @@ function colorEvent() {
         radios[i].onclick = function() {
 
             alert("So you like " + this.value + " more than " + previousVal + " now?");
-
-            clickedColor = this.value;
         
         }
     }
-
-    radios[0].parentElement.style.color = clickedColor;
 
     return;
 }
@@ -625,22 +615,6 @@ function showHide() {
                 event.target.style.color = "white";
 
             }
-
-            // Couldn't get this to work, trying to set visibility 
-            // property gave errors, so I elected to just change color
-            // to hide the element. This will not work well if the page
-            // bbackground color changes, for instance
-            /*
-           if (event.target.style.visibility === "hidden") {
-
-              event.target.style.visibility = "visible";
-
-            } else {
-
-              event.target.style.visibility = "hidden";
-
-            }
-            */
 
         }
 
@@ -799,7 +773,7 @@ window.onload = function() {
         newElem.appendChild(c);
     });
     form.appendChild(newElem);
-    
+
     var wrapper = document.createElement('div');
 
     var children = document.getElementsByName("favoriteColor"); 

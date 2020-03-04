@@ -106,15 +106,19 @@ Find the html element that contains "USA".
 Print that element's contents.
 */
 function getUSA() {
-  let searchText = "USA";
+
   $(document).ready(function(){
-    let list = $("span");
+
+    let list = $("span:contains(USA)");
+
     for (let i = 0; i < list.length ; i++) {
-      if (list[i].textContent == searchText) {
+
         console.log(list[i].innerHTML);
-      }
+
     }
+
   });
+  
 }
 
 /*  
@@ -124,25 +128,13 @@ Print the names of all the people in the sales department.
 */
 function getPeopleInSales() {
 
-  let searchText = "Sales";
-
   $(document).ready(function(){
 
-    let list = $("*");
+    let list = $("td:contains(Sales)").siblings();
 
     for (let i = 0; i < list.length ; i++) {
 
-      if (list[i].textContent == searchText) {
-
-        foundSearch = list[i];
-
-        parent = foundSearch.parentElement;
-
-        name = parent.getElementsByClassName("empName")[0].innerHTML;
-
-        console.log(name);
-
-      }
+        console.log(list[i].innerHTML);
 
     }
 
@@ -164,23 +156,11 @@ function getAnchorChildren() {
 
   $(document).ready(function(){
 
-    let allAnchorElements = $("a");
+    let spans = $("a:has(span)").find("span");
 
     for (let i = 0; i < allAnchorElements.length ; i++) {
 
-      var allChildNodes = allAnchorElements[i].childNodes;
-
-      for (let j = 0; j < allChildNodes.length; j++) {
-
-          if (allChildNodes[j].nodeName == "SPAN") {
-
-              foundSpan = allChildNodes[j].innerHTML;
-
-              console.log(foundSpan);
-
-          } 
-
-      }
+      console.log(spans[i].textContent);
 
     }
 
@@ -222,9 +202,14 @@ function getCustomAttribute() {
 
   $(document).ready(function(){
 
-    let custom = $("[data-customAttr]").attr("data-customAttr");
+    let custom = $("[data-customAttr]");//.attr("data-customAttr");
+    
+    for (let i = 0; i < custom.length; i++) {
+      console.log("The value is: " + custom[i].getAttribute("data-customAttr"));//.attr("data-customAttr"));
+      console.log("The element is: " + custom[i].nodeName);
+    }
 
-    console.log(custom);
+    //console.log(custom);
 
   });
 
@@ -308,7 +293,9 @@ colorHistory[0] = "blue";
 
 function colorEvent() {
 
-    var faveColor = $("#firstForm input[name=favoriteColor]:checked").val();//.html();//.filter(':selected').text();
+    console.log("here");
+
+    var faveColor = $("#firstForm input[name=favoriteColor]:checked").val();
 
     colorHistory[1] = faveColor;
 
@@ -407,20 +394,21 @@ Three seconds after a user clicks on this element, change the text to a random c
 */
 function delayOnP() {
 
-    //replace
-    helloWorld = document.getElementById("helloWorld");
+  helloWorld = $('#helloWorld');
 
-    helloWorld.onclick = setTimeout(function () {
-         
-        let colors = ["blue", "red", "green", "orange", "black"];
+  console.log("here");
 
-        let randomColor = colors[Math.floor(Math.random() * colors.length)];
+  setTimeout(function () {
 
-        helloWorld.style.color = randomColor;
-      
-      }, 3000);
+    let colors = ["blue", "red", "green", "orange", "black"];
 
-    return;
+    let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+    helloWorld.css("color", randomColor);
+  
+  }, 3000);
+
+  return;
 }
 
 /*
@@ -435,30 +423,22 @@ function walkTheDOM(node, func) {
 
     func(node);
 
-    node = node.firstChild;
+    node = $(`${node}:first-child`)
 
     while (node) {
 
         walkTheDOM(node, func);
 
-        node = node.nextSibling;
+        node = $(`${node}`).next();
 
     }
 
     return;
 }
-var hiddenv = false;
+
 window.onload = function() {
 
-    var helloW = this.document.getElementById("helloWorld");
-
-    helloW.addEventListener("click", this.delayOnP);
-
     currentTimeOnh5();
-
-    delayOnP();
-
-    //showHide();
 
     var num1 = $("#num1");
 
@@ -469,9 +449,8 @@ window.onload = function() {
     var forms = $("#firstForm input[name=favoriteColor]");
 
     var employees = $('.empName');
-
     
-    
+    var helloWorld = $('#helloWorld');
 
     $(document).ready(function() { 
 
@@ -483,7 +462,11 @@ window.onload = function() {
 
       forms.change(colorEvent);
 
+      helloWorld.change(delayOnP);
+
     });
+
+    //helloWorld.change(delayOnP);
 
     employees.on("mouseenter", showHide);
 
